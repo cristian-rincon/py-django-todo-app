@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TodoApp - Create A Todo With Django</title>
+    {% load static %}
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    -->
+</head>
+
+<body class="grey darken-2">
+    <div django-app="TaskManager ">
+        <div class="container grey lighten-4 z-depth-5">
+            <div class="content">
+                <div class="row s12 center-align">
+                    <h1>TodoApp</h1>
+                    <p class="tagline">A Django todo app</p>
+                </div>
+                
+                <div class="section">
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <!-- csrf token for basic security -->
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input type="text" id="description" class="" placeholder="¿What do you need to do?"
+                                    name="description" required>
+                            </div>
+                            <div class="col s12 m6">
+                                <label for="dueDate">Due Date</label>
+                                <input type="date" class="datepicker taskDate" name="date">
+                            </div>
+                        </div>
+                        <!-- Categories -->
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <select id="category" class="taskCategory" name="category_select">
+                                    <option value="" disabled selected>Choose a category</option>
+                                    {% for category in categories %}
+                                    <option class="" value="{{ category.name }}" name="{{ category.name }}">
+                                        {{ category.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <label for="category">Category</label>
+                            </div>
+                            <div class="col s12 m6 center-align">
+                                <button class="taskAdd btn waves-effect waves-light" name="taskAdd" type="submit"><i
+                                        class="material-icons right">send</i>Add
+                                    task</button>
+                            </div>
+                        </div>
+
+                        <div class="row s12">
+                            <div class="col s12 center-align">
+
+                                <h4>Tasks</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+
+                                <!-- Table -->
+                                <table class="responsive-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Task</th>
+                                            <th>Remove</th>
+                                            <th>Category</th>
+                                            <th>Created at</th>
+                                            <th>Due date</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for todo in todos %}
+                                        <tr>
+                                            <td>
+                                                <label for="{{ todo.id }}">
+                                                    <input type="checkbox" class="taskCheckbox" name="checkedbox"
+                                                        id="{{ todo.id }}" value="{{ todo.id }}">
+                                                    <span class="complete-">{{ todo.title }}</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <button class="taskDelete btn waves-effect waves-light red darken-2"
+                                                    name="taskDelete" formnovalidate="" type="submit"
+                                                    onclick="$('input#sublist').click();"><i
+                                                        class="material-icons right">delete</i></button>
+                                            </td>
+                                            <td>
+                                                <span class="category-{{ todo.category }}">{{ todo.category }}</span>
+                                            </td>
+                                            <td>
+                                                <strong class="taskDate"><i
+                                                        class="material-icons">date_range</i>{{ todo.created }}</strong>
+                                            </td>
+                                            <td>
+                                                <strong class="taskDate"><i
+                                                        class="material-icons">date_range</i>{{ todo.due_date }}</strong>
+                                            </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- content -->
+        </div><!-- container -->
+    </div>
+    <!-- Footer -->
+            <footer class="page-footer container grey darken-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col l6 s12">
+                            <h5 class="white-text">Follow me on social media:</h5>
+                            <p class="grey-text text-lighten-4">
+                            </p>
+                        </div>
+                        <div class="col l4 offset-l2 s12">
+                            <h5 class="white-text">Links</h5>
+                            <ul>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-copyright grey darken-4">
+                    <div class="container">
+                        &copy; 2020 Cristian Rincón
+                        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                    </div>
+                </div>
+            </footer>
+    
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
